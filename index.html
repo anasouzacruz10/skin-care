@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minha Rotina de Skincare · Medicube + Retinol</title>
+<style>
+  :root{
+    --bg:#fbf6f4; --card:#ffffff; --ink:#3a2e36; --muted:#9b8a93;
+    --rose:#e8a0b4; --rose-d:#d6708c; --lilac:#c8a8d8; --mint:#9fd6c4;
+    --gold:#e6b873; --line:#f0e3e6; --shadow:0 8px 30px rgba(180,120,140,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 80px}
+
+  header{text-align:center;padding:34px 16px 18px}
+  header .kicker{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--rose-d);font-weight:700}
+  header h1{font-size:30px;margin:6px 0 4px;font-weight:800;letter-spacing:-.5px}
+  header p{color:var(--muted);font-size:14px}
+  .tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+  .tag{background:#fff;border:1px solid var(--line);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;box-shadow:var(--shadow)}
+  .tag.ok{color:#3a8f72;border-color:#cdeede}
+  .tag.no{color:#c25b6e;border-color:#f6d6dd}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(251,246,244,.92);backdrop-filter:blur(8px);
+    display:flex;gap:6px;overflow-x:auto;padding:12px 4px;margin:0 -16px;border-bottom:1px solid var(--line);scrollbar-width:none}
+  nav::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;border:none;background:transparent;font:inherit;font-weight:700;font-size:13px;
+    color:var(--muted);padding:9px 16px;border-radius:22px;cursor:pointer;transition:.2s;white-space:nowrap}
+  .tab:hover{color:var(--rose-d)}
+  .tab.active{background:var(--rose-d);color:#fff;box-shadow:0 4px 14px rgba(214,112,140,.4)}
+
+  section{display:none;animation:fade .35s ease}
+  section.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  h2.title{font-size:20px;margin:22px 0 4px;font-weight:800}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:14px}
+
+  /* month selector */
+  .months{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}
+  .mo{background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px 8px;text-align:center;cursor:pointer;transition:.18s;box-shadow:var(--shadow)}
+  .mo:hover{transform:translateY(-3px)}
+  .mo.sel{border-color:var(--rose-d);background:linear-gradient(160deg,#fff,#fde9ef)}
+  .mo .mn{font-size:13px;font-weight:800}
+  .mo .mt{font-size:10.5px;color:var(--muted);margin-top:3px;line-height:1.25}
+  .mfoco{background:linear-gradient(135deg,#fde9ef,#f3eafa);border-radius:14px;padding:13px 15px;font-size:13px;margin-bottom:8px}
+  .mfoco b{color:var(--rose-d)}
+
+  /* week selector */
+  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin:14px 0}
+  .day{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 4px;text-align:center;cursor:pointer;transition:.18s;box-shadow:var(--shadow)}
+  .day:hover{transform:translateY(-3px)}
+  .day.sel{border-color:var(--rose-d);background:linear-gradient(160deg,#fff,#fde9ef)}
+  .day .dn{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+  .day .mode{font-size:9.5px;color:var(--muted);margin-top:4px;line-height:1.2}
+  .day .ret{font-size:13px;margin-top:5px}
+  .day.rest{opacity:.7}
+
+  .ampm{font-size:13px;font-weight:800;color:var(--rose-d);margin:16px 0 4px;display:flex;align-items:center;gap:7px}
+
+  /* cards / steps */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:6px;margin-bottom:14px;overflow:hidden}
+  .card-head{padding:14px 16px}
+  .card-head h3{font-size:16px;font-weight:800}
+  .card-head .foco{font-size:12px;color:var(--rose-d);font-weight:600;margin-top:2px}
+
+  .step{display:flex;align-items:flex-start;gap:12px;padding:13px 14px;border-radius:14px;cursor:pointer;transition:.15s}
+  .step:hover{background:#fdf3f6}
+  .step+.step{border-top:1px solid var(--line)}
+  .num{flex:0 0 30px;height:30px;border-radius:50%;background:var(--rose);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .step.device .num{background:var(--lilac)}
+  .step.retinol .num{background:var(--gold)}
+  .step.bar .num{background:var(--mint)}
+  .step-body{flex:1}
+  .step-body .pname{font-weight:700;font-size:14.5px}
+  .badge{display:inline-block;font-size:10px;font-weight:800;padding:2px 8px;border-radius:8px;margin-top:6px;letter-spacing:.3px}
+  .b-day{background:#eef6f2;color:#3a8f72}
+  .b-dev{background:#f2eafa;color:#8a5bb0}
+  .b-ret{background:#fdf0db;color:#b07d2a}
+  .b-bar{background:#e6f7f0;color:#2f8f6f}
+  .freq{display:inline-block;font-size:10px;font-weight:800;background:#f2eafa;color:#8a5bb0;padding:2px 8px;border-radius:8px;margin-left:6px}
+  .detail{font-size:12.5px;color:var(--ink);background:#faf3f6;border-radius:10px;padding:11px 13px;margin-top:9px;display:none}
+  .step.open .detail{display:block}
+  .detail .note{font-weight:700;color:var(--rose-d);margin-bottom:6px}
+  .detail .why{color:var(--ink);line-height:1.55}
+  .detail .why b{color:var(--rose-d)}
+  .chev{flex:0 0 auto;color:var(--muted);font-size:12px;transition:.2s;margin-top:6px}
+  .step.open .chev{transform:rotate(90deg)}
+
+  .treat{background:#fff;border:1px dashed var(--rose);border-radius:14px;padding:12px 15px;font-size:12.5px;margin-bottom:14px}
+  .treat b{color:var(--rose-d)}
+
+  /* modes */
+  .modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:6px}
+  .mode-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);border-top:4px solid var(--lilac)}
+  .mode-card h4{font-size:15px;font-weight:800}
+  .mode-card .lvl{display:inline-block;background:#f2eafa;color:#8a5bb0;font-size:11px;font-weight:800;padding:3px 10px;border-radius:10px;margin:6px 0}
+  .mode-card p{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .mode-card b{color:var(--ink)}
+
+  .proto{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);font-size:13px}
+  .proto th{background:var(--gold);color:#fff;padding:10px;text-align:left;font-size:12px}
+  .proto td{padding:10px;border-top:1px solid var(--line);vertical-align:top}
+  .proto tr.now td{background:#fdf6e9}
+
+  .rule{display:flex;gap:11px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:10px;box-shadow:var(--shadow)}
+  .rule .ic{font-size:18px;flex:0 0 auto}
+  .rule.bad{border-left:4px solid var(--rose-d)}
+  .rule.good{border-left:4px solid var(--mint)}
+  .rule .t{font-weight:700;font-size:14px}
+  .rule .d{font-size:12.5px;color:var(--muted);margin-top:2px}
+
+  /* diagnóstico */
+  .drnt{display:flex;gap:8px;justify-content:center;margin:8px 0 18px;flex-wrap:wrap}
+  .letter{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);width:74px;padding:12px 4px;text-align:center}
+  .letter .big{font-size:30px;font-weight:800;color:var(--rose-d)}
+  .letter .lab{font-size:10px;color:var(--muted);font-weight:700;margin-top:2px;line-height:1.2}
+  .axis{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:14px 16px;margin-bottom:11px}
+  .axis h4{font-size:14.5px;font-weight:800}
+  .axis .scale{height:8px;border-radius:6px;background:linear-gradient(90deg,#9fd6c4,#e8a0b4);margin:10px 0 6px;position:relative}
+  .axis .pin{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--rose-d);transform:translateX(-50%)}
+  .axis .ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:600}
+  .axis p{font-size:12.5px;color:var(--ink);margin-top:8px;line-height:1.5}
+  .metrics{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);font-size:12.5px;margin:6px 0 8px}
+  .metrics th{background:var(--lilac);color:#fff;padding:9px 10px;text-align:left;font-size:11.5px}
+  .metrics td{padding:9px 10px;border-top:1px solid var(--line)}
+  .metrics .v{font-weight:800}
+  .metrics .alert{color:#c25b6e}
+  .metrics .good{color:#3a8f72}
+
+  .inv{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:10px;overflow:hidden}
+  .inv summary{padding:13px 16px;font-weight:800;font-size:14px;cursor:pointer;list-style:none}
+  .inv summary::-webkit-details-marker{display:none}
+  .inv summary::after{content:'▸';float:right;color:var(--muted);transition:.2s}
+  .inv[open] summary::after{transform:rotate(90deg)}
+  .inv ul{margin:0;padding:0 18px 12px 34px}
+  .inv li{font-size:12.5px;margin:4px 0;color:var(--ink)}
+  .inv li b{color:var(--rose-d)}
+
+  .hint{font-size:11px;color:var(--muted);text-align:center;margin:6px 0 16px}
+  footer{text-align:center;color:var(--muted);font-size:11px;margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Minha rotina completa</div>
+    <h1>Medicube Booster Pro X2 + Retinol</h1>
+    <p>Tipo DRNT · Pele seca · Plano que evolui mês a mês 🌿</p>
+    <div class="tags">
+      <span class="tag ok">✓ Com Botox</span>
+      <span class="tag no">✗ Sem Derma Shot</span>
+      <span class="tag">Retinol: iniciante</span>
+      <span class="tag">Aparelho: quase todo dia</span>
+    </div>
+  </header>
+
+  <nav id="nav">
+    <button class="tab active" data-tab="plano">📅 Meu Plano</button>
+    <button class="tab" data-tab="diagnostico">💧 Diagnóstico</button>
+    <button class="tab" data-tab="produtos">🧺 Meus Produtos</button>
+    <button class="tab" data-tab="modos">⚡ Os 5 Modos</button>
+    <button class="tab" data-tab="retinol">🧴 Retinol</button>
+    <button class="tab" data-tab="regras">⚠️ Regras de Ouro</button>
+  </nav>
+
+  <!-- PLANO -->
+  <section id="plano" class="active">
+    <h2 class="title">Meu plano</h2>
+    <p class="sub">1️⃣ Escolha o <b>mês</b> (o plano evolui pra você ir experimentando). 2️⃣ Escolha o <b>dia da semana</b> pra ver a rotina da noite. A manhã é igual todos os dias daquele mês.</p>
+
+    <div class="months" id="months"></div>
+    <div class="mfoco" id="month-foco"></div>
+
+    <div class="ampm">☀️ Manhã <span style="font-weight:600;color:var(--muted);font-size:11px">(igual todos os dias do mês)</span></div>
+    <div class="card" id="morning-card"></div>
+
+    <div class="ampm">🌙 Noite <span style="font-weight:600;color:var(--muted);font-size:11px">(varia por dia da semana)</span></div>
+    <div class="week" id="week"></div>
+    <div class="hint">👆 toque num dia · ✓ = dia de retinol · 💤 = descanso do aparelho</div>
+    <div class="card" id="night-card"></div>
+    <div class="treat" id="treat"></div>
+
+    <div class="rule" style="border-left:4px solid var(--lilac)">
+      <div class="ic">💡</div><div><div class="t">Como ler este plano</div>
+      <div class="d">Os modos do aparelho (Booster, Mask, MC, Air Shot) seguem fixos por dia da semana — o que muda de mês pra mês são os <b>produtos</b> e a <b>frequência do retinol</b>. Toque em cada passo para ver a explicação completa.</div></div></div>
+
+  </section>
+
+  <!-- DIAGNÓSTICO -->
+  <section id="diagnostico">
+    <h2 class="title">Diagnóstico da sua pele</h2>
+    <p class="sub">Baseado na sua análise Baumann. Seu tipo é <b>DRNT</b> (com marcadores -A +E).</p>
+    <div class="drnt">
+      <div class="letter"><div class="big">D</div><div class="lab">Dry<br>Seca</div></div>
+      <div class="letter"><div class="big">R</div><div class="lab">Resistant<br>Resistente</div></div>
+      <div class="letter"><div class="big">N</div><div class="lab">Non-pigm.<br>Sem manchas</div></div>
+      <div class="letter"><div class="big">T</div><div class="lab">Tight<br>Tende a rugas</div></div>
+    </div>
+
+    <div class="axis">
+      <h4>💧 Seca (D) — prioridade máxima</h4>
+      <div class="scale"><div class="pin" style="left:12%"></div></div>
+      <div class="ends"><span>◀ Muito seca</span><span>Oleosa ▶</span></div>
+      <p>Seu sebo está <b>muito abaixo da média</b>. A pele desidrata fácil, pode descamar e piorar com sol. O foco nº 1 é <b>hidratar e reconstruir a barreira</b> (ácido hialurônico, ceramidas, B5).</p>
+    </div>
+    <div class="axis">
+      <h4>🛡️ Resistente (R) — ponto forte</h4>
+      <div class="scale"><div class="pin" style="left:82%"></div></div>
+      <div class="ends"><span>◀ Sensível</span><span>Resistente ▶</span></div>
+      <p>Vermelhidão dentro do normal. Sua pele <b>tolera bem ativos</b> (retinol, ácidos, vit. C) — por isso dá pra experimentar, mas sempre introduzindo um de cada vez.</p>
+    </div>
+    <div class="axis">
+      <h4>✨ Não-pigmentada (N) — ponto forte</h4>
+      <div class="scale"><div class="pin" style="left:22%"></div></div>
+      <div class="ends"><span>◀ Sem manchas</span><span>Pigmentada ▶</span></div>
+      <p>Pouca tendência a manchas. O jogo aqui é <b>prevenção</b>: protetor solar diário + niacinamida/vit. C de manutenção.</p>
+    </div>
+    <div class="axis">
+      <h4>⏳ Tende a rugas (T) — atenção</h4>
+      <div class="scale"><div class="pin" style="left:72%"></div></div>
+      <div class="ends"><span>◀ Firme</span><span>Tende a rugas ▶</span></div>
+      <p>Linhas no sulco nasolabial e <b>elasticidade reduzida</b> já aparecendo. Pede <b>retinol, vitamina C, peptídeos/colágeno</b> e estímulo (seu Medicube ajuda muito aqui).</p>
+    </div>
+
+    <h2 class="title">O que a análise mediu</h2>
+    <table class="metrics">
+      <tr><th>Parâmetro</th><th>Valor</th><th>Leitura</th></tr>
+      <tr><td>Sebo (oleosidade)</td><td class="v alert">-206</td><td>Bem baixo → pele seca</td></tr>
+      <tr><td>Vermelhidão</td><td class="v good">6</td><td>Normal → resistente</td></tr>
+      <tr><td>Pigmentação</td><td class="v good">-9</td><td>Baixa → sem manchas</td></tr>
+      <tr><td>Rugas (nasolabial)</td><td class="v alert">atenção</td><td>Começando a marcar</td></tr>
+      <tr><td>Elasticidade</td><td class="v alert">atenção</td><td>Abaixo do ideal</td></tr>
+      <tr><td>Textura</td><td class="v alert">-10</td><td>A refinar (esfoliação suave)</td></tr>
+      <tr><td>Poros / porfirina</td><td class="v alert">-27</td><td>Monitorar — limpeza + esfoliação</td></tr>
+    </table>
+
+    <h2 class="title">Resumo em uma frase</h2>
+    <div class="rule good"><div class="ic">🌿</div><div><div class="t">Hidratar muito, prevenir e tratar rugas, e proteger do sol</div><div class="d">Barreira (hialurônico + B5) como base · retinol/vit. C/niacinamida para firmeza e prevenção · SPF todo dia · esfoliação suave para textura e poros.</div></div></div>
+  </section>
+
+  <!-- PRODUTOS -->
+  <section id="produtos">
+    <h2 class="title">Minha opinião — o que usar e evitar</h2>
+    <div id="opinions"></div>
+    <h2 class="title">Seu inventário (por categoria)</h2>
+    <div id="inventory"></div>
+  </section>
+
+  <!-- MODOS -->
+  <section id="modos">
+    <h2 class="title">Os 5 modos que você usa</h2>
+    <p class="sub">Sem Derma Shot (por causa do Botox). Estes são seus modos.</p>
+    <div class="modes" id="modes"></div>
+  </section>
+
+  <!-- RETINOL -->
+  <section id="retinol">
+    <h2 class="title">Protocolo Retinol — começando agora</h2>
+    <p class="sub">Sua pele é DRNT (resistente), tolera bem ativos. Mas comece devagar para observar reações.</p>
+    <table class="proto" id="proto"></table>
+    <h2 class="title">Dicas essenciais</h2>
+    <div id="retinol-tips"></div>
+  </section>
+
+  <!-- REGRAS -->
+  <section id="regras">
+    <h2 class="title">A regra de ouro — NUNCA faça isso</h2>
+    <p class="sub">E o que SEMPRE deve fazer.</p>
+    <div id="rules"></div>
+  </section>
+
+  <footer>Feito com carinho 🌸 · escolha o mês e o dia, e toque nos passos para os detalhes</footer>
+</div>
+
+<script>
+/* ===== GLOSSÁRIO ===== */
+const glossary=[
+  ["Senka","Espuma de limpeza japonesa super suave, com seda e colágeno. Limpa sem ressecar — ideal pra pele seca. <b>Primeiro passo</b>, com a pele molhada, em movimentos circulares, enxaguando com água morna."],
+  ["ilso","Tônico/softener suave que reequilibra e prepara a pele depois da limpeza, deixando-a úmida pra absorver melhor os próximos passos. Sem álcool agressivo."],
+  ["Numbuzin 9+","Sua essência numbuzin Lifting-sil 9+: <b>lifting, firmeza e hidratação</b>. Tonifica, ajuda na elasticidade e prepara a pele para os ativos seguintes penetrarem melhor. Pode ser usada <b>todos os dias</b>, logo após o aparelho."],
+  ["Hada Labo Gokujyun","Linha japonesa com vários tipos de ácido hialurônico. A loção hidrata em camadas (batendo de leve) e o creme sela tudo. Pilar de hidratação pra pele seca."],
+  ["Anua Niacinamide","Sérum 10% niacinamida + 4% ácido tranexâmico (TXA). A niacinamida <b>fortalece a barreira</b> e o TXA previne/clareia manchas. Ótimo de manhã, quase todo dia."],
+  ["goodal Vita C","Vitamina C (sérum ou óleo) para <b>antioxidante, glow e clareamento leve</b>. Use de manhã, antes do protetor. ⚠️ Não combine com retinol no mesmo período (separe 12h)."],
+  ["Skin Aqua","Protetor solar FPS50+ leve, à base de água, que reforça a barreira. <b>Inegociável todos os dias</b> — especialmente em dias de retinol. Reaplique ao longo do dia."],
+  ["Bioré UV","Protetor FPS50+ PA++++, textura aquosa e leve. <b>Variação do protetor</b> pra não enjoar. Reaplique ao longo do dia."],
+  ["Booster Mode","<b>Eletroporação:</b> abre microcanais temporários e empurra os ativos mais fundo. Use com serums potentes (niacinamida, PDRN). ~5 min em movimentos ascendentes, com produto à base de água. Modo de 'turbinar a absorção'."],
+  ["Mask Mode","Modo pra usar <b>junto com máscara de tecido</b>: as correntes otimizam a entrada dos ingredientes. Coloque a máscara, passe o aparelho por cima ~5 min. No sábado o nível é mais alto."],
+  ["MC Mode","<b>Microcorrente:</b> firmeza, volume e preenchimento de linhas finas — 'lifting' sem agulha. Trabalhe nasolabial, mandíbula e maçãs, sempre ascendente. Combine com serum hidratante/plumping."],
+  ["Air Shot Mode","<b>Microagulhamento elétrico suave:</b> refina poros, esfolia de leve e melhora a textura. É o modo mais delicado, então a pele precisa estar <b>limpa e seca</b> antes. Foque na Zona T. Toque suave, 3-5 min."],
+  ["innisfree Retinol","Seu retinol mais gentil (Cica + barreira). Renova a pele, estimula colágeno e suaviza linhas. Camada finíssima (tamanho de uma ervilha), sempre seguido de hidratante de barreira. Comece 1x/semana."],
+  ["Epidrat","Hidratante calmante com vitamina B5, usado <b>logo após o retinol</b>. Protege e repara a barreira, evitando descamação. Em noite de retinol, entra no lugar do hidratante normal."],
+  ["345 Relief","Creme calmante de barreira (ceramida/centella). Acalma e repara — ótimo em noites pós-ativos ou de pele mais reativa."],
+  ["medicube PDRN Pink Collagen","Hidratante rico em PDRN + colágeno. <b>Sela a rotina</b>, reforça a barreira e dá efeito de pele densa. Ótimo como última camada nas noites mais intensas."],
+  ["MEDITHERAPY Hyaluronic","Máscara de tecido de ácido hialurônico, usada <b>durante o Mask Mode</b> pra hidratação intensa. ~5-10 min; o aparelho ajuda a penetrar."],
+  ["Quality First","Máscara de tecido com vitamina C (VC100) — hidratação + glow. Use durante o Mask Mode."],
+  ["Collagen Mask","Máscara de tecido de colágeno pra firmeza e hidratação. Boa nos dias de Mask Mode no mês de firmeza."],
+  ["VT Anti-Gravity","Máscara/lifting mask da VT com tecnologia reedle, foco em <b>efeito tensor e firmeza</b>. Usada no Mask Mode do sábado pra um tratamento mais 'premium'."],
+  ["Beauty of Joseon Revive Eye","Sérum para os olhos com ginseng + retinal — versão suave de vitamina A pra <b>firmeza e recuperação</b> da área dos olhos."],
+  ["SANA Soy Milk","Creme de olhos japonês com isoflavonas de soja — <b>suave e hidratante</b>, apoia o colágeno. Boa opção de manhã."],
+  ["Retinol Lifting Eye","Creme de olhos com retinol, foco em <b>linhas finas e firmeza</b> da área. Quantidade mínima, batendo de leve."],
+  ["goodal Vita C Hari Oil","Óleo facial de vitamina C. Pra pele seca, 2-3 gotas misturadas ao hidratante de manhã dão glow e antioxidante. Não usar junto com retinol."],
+  ["Vaseline","Geleia oclusiva pra <b>'slugging'</b>: uma camada fininha por cima de tudo na última etapa, em noites muito secas, pra travar a hidratação enquanto dorme. 1x/semana basta."],
+  ["SEM aparelho","Domingo é <b>dia de descanso do aparelho</b>: depois de 6 dias de estímulo, a pele recupera a barreira. Só rotina básica e suave, sem aparelho e sem retinol — o 'recovery day'."],
+];
+function explain(name){
+  const n=name.toLowerCase();
+  const hit=glossary.find(g=>n.indexOf(g[0].toLowerCase())>-1);
+  return hit?hit[1]:"";
+}
+
+/* ===== ESTRUTURA DO APARELHO (fixa por dia) ===== */
+const weekBase=[
+  {n:"Seg",mode:"Booster Mode",lvl:"3-4",kind:"booster",retinolDay:true,note:"com serum ativo · 5 min · massagem ascendente"},
+  {n:"Ter",mode:"Mask Mode",lvl:"3-4",kind:"mask",note:"com máscara de tecido coberta · 5 min"},
+  {n:"Qua",mode:"MC Mode",lvl:"4-5",kind:"mc",note:"nasolabial + mandíbula + maçãs · 5 min ascendente"},
+  {n:"Qui",mode:"Air Shot Mode",lvl:"2-3",kind:"air",retinolDay:true,note:"T-Zone + U-Zone · 3-5 min · toque suave"},
+  {n:"Sex",mode:"Booster Mode",lvl:"3-4",kind:"booster",note:"com serum (EGF/PDRN) · 5 min"},
+  {n:"Sáb",mode:"Mask Mode",lvl:"4",kind:"mask",sat:true,note:"máscara especial · 5 min · mais intenso"},
+  {n:"Dom",mode:"Descanso",rest:true,note:"sem aparelho — recovery após 6 dias"},
+];
+
+/* ===== PALETA POR MÊS ===== */
+const plan=[
+  {mn:"Mês 1",mt:"Reconstruir barreira",
+   foco:"<b>Hidratação profunda e barreira.</b> Retinol entra bem devagar — só 1x/semana (segunda). Pele calma e nutrida antes de pisar fundo nos ativos.",
+   retinolDays:[0],
+   morning:[
+     ["Senka Perfect Whip","Limpeza suave"],
+     ["Hada Labo Gokujyun Premium (loção)","Tônico hialurônico — hidratação em camadas"],
+     ["Anua Niacinamide 10 + TXA 4","Sérum — fortalece a barreira e previne manchas"],
+     ["Retinol Lifting Eye Cream","Área dos olhos"],
+     ["Hada Labo Gokujyun Premium (creme)","Hidratante rico — sela a água","bar"],
+     ["Skin Aqua Super Moisture UV SPF50+","Protetor solar"],
+   ],
+   toner:"ilso Natural Mild Softener",
+   boosterSerum:"Anua Niacinamide 10 + TXA 4",
+   mcSerum:"Hada Labo Gokujyun (loção) — plumping",
+   maskSheet:"MEDITHERAPY Hyaluronic Acid Mask",
+   maskSheetSat:"MEDITHERAPY Hyaluronic Acid Mask",
+   lift:"Numbuzin 9+ Lifting-sil Essence",
+   eye:"Beauty of Joseon Revive Eye",
+   moist:"Hada Labo Gokujyun Premium (creme)",
+   barrier:"Epidrat Calm B5",
+   retinolProduct:"innisfree Retinol Cica Barrier",
+   treat:"<b>Tratamento:</b> máscara MEDITHERAPY (hialurônico) 2x/semana. A esfoliação suave já vem do <b>Air Shot Mode (quinta)</b> — não precisa de ácido extra agora."},
+
+  {mn:"Mês 2",mt:"Glow & textura",
+   foco:"Pele mais forte → entra <b>vitamina C de manhã</b> (antioxidante + glow) e foco em textura. Retinol sobe pra 2x/semana (segunda + quinta).",
+   retinolDays:[0,3],
+   morning:[
+     ["Senka Perfect Whip","Limpeza suave"],
+     ["Hada Labo Gokujyun Premium (loção)","Tônico hialurônico"],
+     ["goodal Vita C+ Green Tangerine","Sérum de vitamina C — antioxidante e glow"],
+     ["SANA Soy Milk Eye Cream","Olhos (variação suave)"],
+     ["medicube PDRN Pink Collagen Cream","Hidratante com PDRN + colágeno","bar"],
+     ["Bioré UV Aqua Rich SPF50+","Protetor solar (variação)"],
+   ],
+   toner:"Hada Labo Gokujyun Premium (loção)",
+   boosterSerum:"Anua Niacinamide 10 + TXA 4",
+   mcSerum:"medicube PDRN Pink Collagen — plumping",
+   maskSheet:"Quality First VC100 (vit. C)",
+   maskSheetSat:"Collagen Mask",
+   lift:"Numbuzin 9+ Lifting-sil Essence",
+   eye:"Beauty of Joseon Revive Eye",
+   moist:"medicube PDRN Pink Collagen Cream",
+   barrier:"Epidrat Calm B5",
+   retinolProduct:"innisfree Retinol Cica Barrier",
+   treat:"<b>Tratamento:</b> máscara Quality First VC100 ou Vita Rice 1x/semana. ⚠️ Vit. C de manhã, retinol à noite — nunca juntos. A esfoliação fica por conta do <b>Air Shot Mode (quinta)</b>, suave e suficiente para a textura."},
+
+  {mn:"Mês 3",mt:"Firmeza & anti-idade",
+   foco:"Retinol consolidado (2x/semana, dá pra testar 3x). Foco em <b>colágeno e elasticidade</b> (eixo T). Camadas mais ricas e slugging nas noites mais secas.",
+   retinolDays:[0,3],
+   morning:[
+     ["Senka Perfect Whip","Limpeza suave"],
+     ["ilso Natural Mild Softener","Tônico"],
+     ["Anua Niacinamide 10 + TXA 4","Sérum — barreira + firmeza"],
+     ["goodal Vita C Hari Oil (2-3 gotas)","Óleo de vit. C no hidratante — glow para pele seca"],
+     ["Retinol Lifting Eye Cream","Olhos"],
+     ["medicube PDRN Pink Collagen Cream","Hidratante colágeno","bar"],
+     ["Skin Aqua / Bioré UV SPF50+","Protetor solar"],
+   ],
+   toner:"ilso Natural Mild Softener",
+   boosterSerum:"Anua Niacinamide 10 + TXA 4",
+   mcSerum:"medicube PDRN Pink Collagen — plumping",
+   maskSheet:"Collagen Mask",
+   maskSheetSat:"VT Anti-Gravity Lifting Mask",
+   lift:"Numbuzin 9+ Lifting-sil Essence",
+   eye:"Beauty of Joseon Revive Eye",
+   moist:"medicube PDRN Pink Collagen Cream",
+   barrier:"Epidrat Calm B5",
+   retinolProduct:"innisfree Retinol Cica Barrier",
+   treat:"<b>Tratamento:</b> máscara de colágeno + patches de lifting 1-2x/semana · Banobagi Retinol Mask ocasional (não na mesma noite do retinol em creme) · slugging com Vaselina nas noites muito secas."},
+];
+
+/* ===== CONSTRUTOR DE NOITE (mês × dia) ===== */
+function buildNight(mi,di){
+  const m=plan[mi], d=weekBase[di];
+  const isRet = d.retinolDay && m.retinolDays.includes(di);
+  const S=[];
+  S.push(["Senka Perfect Whip","Limpeza","day"]);
+  S.push([m.toner,"Tônico","day"]);
+
+  if(d.rest){
+    S.push(["SEM aparelho — descanso","Deixa a pele descansar após a semana de aparelho · recovery","device"]);
+    S.push([m.lift,"Lifting suave","day"]);
+    S.push([m.eye,"Olhos — recovery","day"]);
+    S.push([m.moist,"Hidratante reparador","bar"]);
+    return S;
+  }
+  if(d.kind==="mask"){
+    S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+d.note,"device"]);
+    S.push([d.sat?m.maskSheetSat:m.maskSheet,"Máscara de tecido — durante o aparelho","day"]);
+    S.push([m.lift,"Lifting (após a máscara)","day"]);
+  } else if(d.kind==="mc"){
+    S.push([m.lift,"Lifting","day"]);
+    S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+d.note,"device"]);
+    S.push([m.mcSerum,"Hidratação + plumping — deixe na pele do aparelho","day"]);
+  } else { // booster / air
+    const ctx = d.kind==="air" ? "pele LIMPA e SECA antes" : "com "+m.boosterSerum;
+    S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+ctx+" · "+d.note,"device"]);
+    S.push([m.lift,"Lifting (após o aparelho)","day"]);
+  }
+  if(isRet){
+    S.push([m.retinolProduct,"RETINOL · espere 2 min após o aparelho · camada fina (ervilha)","retinol"]);
+  }
+  S.push([m.eye,"Olhos","day"]);
+  if(isRet){
+    S.push([m.barrier,"Hidratante de barreira — pós-retinol (essencial)","bar"]);
+  } else {
+    S.push([m.moist,"Hidratante final","bar"]);
+  }
+  return S;
+}
+
+/* ===== RENDER ===== */
+const badgeMap={day:["b-day","produto"],device:["b-dev","aparelho"],retinol:["b-ret","retinol"],bar:["b-bar","barreira"]};
+function stepHTML(s){
+  const [name,desc,type,freq]=s;
+  const [bc,bt]=badgeMap[type]||badgeMap.day;
+  const why=explain(name);
+  return `<div class="step ${type||'day'}">
+    <div class="num">•</div>
+    <div class="step-body">
+      <div class="pname">${name}${freq?`<span class="freq">${freq}</span>`:''}</div>
+      <span class="badge ${bc}">${bt}</span>
+      <div class="detail"><div class="note">📍 ${desc}</div>${why?`<div class="why">${why}</div>`:''}</div>
+    </div>
+    <div class="chev">▸</div>
+  </div>`;
+}
+function numberStops(card){let i=1;card.querySelectorAll('.step').forEach(st=>st.querySelector('.num').textContent=i++);}
+
+let curMonth=0, curDay=0;
+
+const monthsEl=document.getElementById('months');
+plan.forEach((p,i)=>{
+  const el=document.createElement('div');
+  el.className='mo'+(i===0?' sel':'');
+  el.innerHTML=`<div class="mn">${p.mn}</div><div class="mt">${p.mt}</div>`;
+  el.onclick=()=>{curMonth=i;document.querySelectorAll('.mo').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');renderMonth();};
+  monthsEl.appendChild(el);
+});
+
+function renderWeek(){
+  const w=document.getElementById('week');w.innerHTML='';
+  weekBase.forEach((d,i)=>{
+    const isRet=d.retinolDay && plan[curMonth].retinolDays.includes(i);
+    const el=document.createElement('div');
+    el.className='day'+(d.rest?' rest':'')+(i===curDay?' sel':'');
+    el.innerHTML=`<div class="dn">${d.n}</div><div class="mode">${d.rest?'Descanso':d.mode.replace(' Mode','')}</div><div class="ret">${d.rest?'💤':(isRet?'✓':'·')}</div>`;
+    el.onclick=()=>{curDay=i;renderWeek();renderNight();};
+    w.appendChild(el);
+  });
+}
+function renderMorning(){
+  const m=plan[curMonth];const c=document.getElementById('morning-card');
+  c.innerHTML=`<div class="card-head"><h3>☀️ Manhã · ${m.mn}</h3><div class="foco">${m.morning.length} passos · igual todos os dias</div></div>`
+    +m.morning.map(stepHTML).join('');
+  numberStops(c);
+}
+function renderNight(){
+  const d=weekBase[curDay];const m=plan[curMonth];
+  const isRet=d.retinolDay && m.retinolDays.includes(curDay);
+  const tag=isRet?' + RETINOL':(d.rest?'':' (sem retinol)');
+  const c=document.getElementById('night-card');
+  const steps=buildNight(curMonth,curDay);
+  const head=d.rest?`Domingo · Descanso`:`${d.n} · ${d.mode}${tag}`;
+  c.innerHTML=`<div class="card-head"><h3>🌙 ${head}</h3><div class="foco">${m.mn} — ${m.mt}</div></div>`+steps.map(stepHTML).join('');
+  numberStops(c);
+}
+function renderMonth(){
+  document.getElementById('month-foco').innerHTML=plan[curMonth].foco;
+  document.getElementById('treat').innerHTML=plan[curMonth].treat;
+  renderMorning();renderWeek();renderNight();
+}
+renderMonth();
+
+/* modes */
+const modes=[
+  {n:"Booster Mode",lvl:"Nível 3-4",faz:"Eletroporação — aumenta a permeabilidade da pele para absorção de ativos",mel:"Serums com EGF, PDRN, niacinamida, Vitamina C",dias:"Segunda + Sexta"},
+  {n:"MC Mode (Microcorrente)",lvl:"Nível 4-5",faz:"Plumping, volume, preenche linhas finas, tira flacidez",mel:"Serums hidratantes/plumping (PDRN, peptídeos)",dias:"Quarta (nasolabial + mandíbula)"},
+  {n:"Air Shot Mode",lvl:"Nível 2-3",faz:"Agulhas elétricas — refina poros, exfolia, suaviza textura",mel:"Serum leve, pele LIMPA e SECA antes",dias:"Quinta (T-Zone principalmente)"},
+  {n:"Mask Mode",lvl:"Nível 3-4",faz:"Otimiza absorção da máscara de tecido + dos ingredientes",mel:"Máscaras de tecido coreanas (MEDITHERAPY, VT, Collagen)",dias:"Terça + Sábado (sábado mais intenso)"},
+  {n:"Dual Mode",lvl:"Nível 3-4",faz:"Combina 2 modos simultaneamente para eficiência máxima",mel:"Ex: Mask Mode + MC Mode no sábado",dias:"Fim de semana, se quiser intensificar"},
+];
+document.getElementById('modes').innerHTML=modes.map(m=>`
+  <div class="mode-card"><h4>${m.n}</h4><div class="lvl">${m.lvl}</div>
+    <p><b>O que faz:</b> ${m.faz}</p><p><b>Melhor com:</b> ${m.mel}</p><p><b>Dias:</b> ${m.dias}</p></div>`).join('');
+
+/* retinol */
+const proto=[
+  ["1-2 (AGORA)","1x/semana (segunda)","innisfree Retinol Cica","Observe descamação, vermelhidão ou irritação",true],
+  ["3-4","2x/semana (seg + qui)","innisfree Retinol Cica","Se a pele estiver ok, adiciona quinta-feira",false],
+  ["Mês 2+","2-3x/semana","innisfree Retinol Cica (+ Banobagi mask ocasional)","Aumenta conforme sua tolerância",false],
+];
+document.getElementById('proto').innerHTML=`<tr><th>Semana</th><th>Frequência</th><th>Produto</th><th>Observação</th></tr>`
+  +proto.map(r=>`<tr class="${r[4]?'now':''}"><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('');
+const retinolTips=[
+  ["🧴","Hidratante pós-retinol","No dia seguinte ao retinol, use Epidrat Calm B5 ou medicube PDRN no lugar do hidratante normal para proteger a barreira."],
+  ["⏱️","Espere 2 minutos","Depois de usar o aparelho, antes de aplicar o retinol."],
+  ["🫛","Comece com camada fina","Use quantidade do tamanho de uma ervilha."],
+  ["🚨","Descamação excessiva?","Pause 1 semana inteira e volte com 1x/quinzenal em vez de semanal."],
+  ["☀️","Protetor solar OBRIGATÓRIO","Todas as noites com retinol → aplique SPF na manhã seguinte."],
+  ["🍊","Evite Vitamina C no mesmo período","Vit. C de manhã, retinol à noite — espere pelo menos 12h."],
+];
+document.getElementById('retinol-tips').innerHTML=retinolTips.map(t=>`
+  <div class="rule good"><div class="ic">${t[0]}</div><div><div class="t">${t[1]}</div><div class="d">${t[2]}</div></div></div>`).join('');
+
+/* regras */
+const rules=[
+  ["bad","🚫","Aparelho + Retinol na mesma noite","Muito irritante para pele seca. Máximo: aparelho e depois retinol com 2 min de espera (só nos dias de retinol — seg e qui)."],
+  ["bad","🚫","Derma Shot + qualquer coisa","Você tem Botox — o EMS pode interferir com o efeito."],
+  ["bad","🚫","Aparelho com produtos com óleo ou silicone","Só produtos à base de água funcionam."],
+  ["bad","🚫","Retinol sem hidratante pós-retinol","Sempre use Epidrat ou medicube PDRN depois."],
+  ["good","✅","SEMPRE: protetor solar todos os dias","Especialmente em dias com retinol."],
+  ["good","✅","SEMPRE: deixe a pele descansar no domingo","Sem aparelho, sem retinol."],
+  ["good","✅","SEMPRE: comece o retinol devagar","1x/semana no Mês 1, subindo conforme a tolerância."],
+];
+document.getElementById('rules').innerHTML=rules.map(r=>`
+  <div class="rule ${r[0]}"><div class="ic">${r[1]}</div><div><div class="t">${r[2]}</div><div class="d">${r[3]}</div></div></div>`).join('');
+
+/* opiniões */
+const opinions=[
+  ["good","🧼","Limpeza: fique na Senka","Suave e perfeita para pele seca. <b>Evite a Darrow Actine no dia a dia</b> (salicílico, pra pele oleosa/acne) — reserve só para um ponto específico. Neutrogena gel serve de reserva, mas a Senka é mais gentil."],
+  ["good","🌙","Retinol: você tem vários, vá com calma","Comece pelo <b>innisfree Retinol Cica</b> (o mais gentil). Suba a frequência só quando a pele estiver tranquila. A máscara Banobagi e o creme de olhos com retinol entram depois, em dias separados."],
+  ["good","🍊","Vitamina C de manhã","goodal Vita C (sérum ou óleo) protege contra poluição/sol e dá glow. <b>Nunca no mesmo período que o retinol.</b>"],
+  ["good","💧","Niacinamida + TXA (Anua) é ótima pra você","Fortalece a barreira (sua prioridade) e previne manchas no eixo N. Pode usar quase todo dia, de manhã."],
+  ["good","✨","Sua esfoliação vem do aparelho","Você não tem um esfoliante químico — e está tudo bem: o <b>Air Shot Mode (quinta)</b> já refina poros e textura de forma suave. Se um dia quiser um ácido, introduza devagar (1x/semana) e nunca na mesma noite do retinol."],
+  ["good","👁️","Rotacione os cremes de olhos","SANA Soy Milk (suave, de manhã), Beauty of Joseon (retinal, à noite), Retinol Lifting Eye e patches. Variar te deixa testar."],
+  ["good","🛡️","Barreira sempre fecha a rotina","Epidrat B5, 345 Relief, Hada Labo creme, medicube PDRN. Em noite de retinol, a última camada é sempre um desses. Slugging com Vaselina 1x/sem nas noites secas."],
+  ["good","☀️","Protetor é inegociável","Skin Aqua e Bioré UV — alterne. Reaplique ao longo do dia, principalmente com retinol/vit. C."],
+];
+document.getElementById('opinions').innerHTML=opinions.map(o=>`
+  <div class="rule ${o[0]}"><div class="ic">${o[1]}</div><div><div class="t">${o[2]}</div><div class="d">${o[3]}</div></div></div>`).join('');
+
+/* inventário */
+const inventory=[
+  ["🧼 Limpeza",["<b>Senka Perfect Whip</b> — espuma suave (uso diário)","Neutrogena Gel de Limpeza — reserva","Darrow Actine — só pontual / zona T","お米 Rice Pack — limpeza-máscara ocasional"]],
+  ["💦 Tônico / Essência",["<b>Hada Labo Gokujyun Premium</b> (loção) — hialurônico","<b>ilso Natural Mild Softener</b> — calmante","<b>Numbuzin 9+ Lifting-sil Essence</b> — lifting + hidratação (diário)"]],
+  ["🧪 Sérum",["<b>Anua Niacinamide 10 + TXA 4</b> — barreira + manchas","goodal Vita C+ Green Tangerine — vit. C glow","goodal Vita C Hari Oil — óleo de vit. C","By Wishtrend / Handsome Green Zinc Teca — calmante pontual"]],
+  ["🌙 Retinol",["<b>innisfree Retinol Cica Barrier</b> — o mais gentil (começar por aqui)","Banobagi Retinol Serum Mask — máscara ocasional","Retinol Lifting Eye Cream — olhos"]],
+  ["🫙 Hidratante / Barreira",["<b>medicube PDRN Pink Collagen</b> — PDRN + colágeno","<b>Epidrat Calm B5</b> — reparo pós-retinol","Hada Labo Gokujyun creme — rico","345 Relief Cream — calmante","medicube R.E.D / Red Erasing — vermelhidão pontual","Vaseline Healing Jelly — slugging"]],
+  ["👁️ Olhos",["Beauty of Joseon Revive Eye — ginseng + retinal","SANA Soy Milk Eye Cream — suave","Retinol Lifting Eye Cream","Patches / hidrogel de olhos — boost ocasional"]],
+  ["☀️ Protetor solar",["<b>Skin Aqua Super Moisture UV SPF50+</b>","Bioré UV Aqua Rich SPF50+"]],
+  ["🎭 Máscaras",["MEDITHERAPY Hyaluronic Acid — hidratação","Quality First VC100 — vit. C","Vita Rice / Collagen masks","VT Anti-Gravity — lifting","ilso Soothing — calmante","Patches de lifting / anti-rugas"]],
+  ["💄 Extra",["Laneige Lip Sleeping Mask — lábios"]],
+];
+document.getElementById('inventory').innerHTML=inventory.map((c,idx)=>`
+  <details class="inv" ${idx===0?'open':''}><summary>${c[0]}</summary><ul>${c[1].map(x=>`<li>${x}</li>`).join('')}</ul></details>`).join('');
+
+/* ===== INTERAÇÕES ===== */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('section').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+});
+document.body.addEventListener('click',e=>{
+  const step=e.target.closest('.step');
+  if(step) step.classList.toggle('open');
+});
+</script>
+</body>
+</html>
