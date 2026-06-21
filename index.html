@@ -84,6 +84,8 @@
   .detail .note{font-weight:700;color:var(--rose-d);margin-bottom:6px}
   .detail .why{color:var(--ink);line-height:1.55}
   .detail .why b{color:var(--rose-d)}
+  .detail .how{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);color:var(--ink);line-height:1.55}
+  .detail .how b{color:var(--rose-d)}
   .chev{flex:0 0 auto;color:var(--muted);font-size:12px;transition:.2s;margin-top:6px}
   .step.open .chev{transform:rotate(90deg)}
 
@@ -274,42 +276,42 @@
 <script>
 /* ===== GLOSSÁRIO ===== */
 const glossary=[
-  ["Senka","Espuma de limpeza japonesa super suave, com seda e colágeno. Limpa sem ressecar — ideal pra pele seca. <b>Primeiro passo</b>, com a pele molhada, em movimentos circulares, enxaguando com água morna."],
-  ["ilso Super Melting","Tônico/softener suave (ilso) que reequilibra e prepara a pele depois da limpeza, deixando-a úmida pra absorver melhor os próximos passos. Sem álcool agressivo."],
-  ["Numbuzin 9+","Sua essência numbuzin Lifting-sil 9+: <b>lifting, firmeza e hidratação</b>. Tonifica, ajuda na elasticidade e prepara a pele para os ativos seguintes penetrarem melhor. Pode ser usada <b>todos os dias</b>, logo após o aparelho."],
-  ["Hada Labo Gokujyun","Hada Labo Gokujyun Premium (frasco dourado): loção japonesa com vários tipos de ácido hialurônico. Hidrata em camadas (batendo de leve). Pilar de hidratação pra pele seca."],
-  ["Shirojyun","Hada Labo Shirojyun Premium (pote azul): linha clareadora com arbutina + ácido hialurônico. <b>Clareia e hidrata</b> ao mesmo tempo — boa como hidratante rico de manhã ou à noite."],
-  ["Niacinamide","Anua 10+ (frasco vermelho): 10% niacinamida + 4% ácido tranexâmico (TXA). A niacinamida <b>fortalece a barreira</b> e o TXA previne/clareia manchas. Ótimo de manhã, quase todo dia."],
-  ["Anua 100+","Anua 100+ (frasco verde): PDRN + ácido hialurônico em cápsulas. <b>Hidratação profunda, reparo e plumping</b> — combina muito bem com o MC Mode e o Booster, porque os ativos são empurrados pra dentro."],
-  ["goodal Vita","Vitamina C (você tem o Dark Spot Care e o Vita C·E Tea) para <b>antioxidante, glow e clareamento leve</b>. Use de manhã, antes do protetor. ⚠️ Não combine com retinol no mesmo período (separe 12h)."],
-  ["Vitamin C Capsule","Sérum de vitamina C em cápsulas, textura levemente oleosa — bom pra dar <b>glow numa pele seca</b>. 2-3 gotas misturadas ao hidratante de manhã. Não usar junto com retinol."],
-  ["Bringgreen","Bringgreen Zinc Teca Blemish Serum: zinco + centella. <b>Calmante e anti-oleosidade pontual</b> — bom em pontos específicos ou quando a pele está reativa."],
-  ["Skin Aqua","Protetor solar Skin Aqua FPS50+ leve, à base de água, que reforça a barreira. <b>Inegociável todos os dias</b> — especialmente em dias de retinol. Reaplique ao longo do dia."],
-  ["Bioré UV","Protetor Bioré UV Aqua Rich FPS50+ PA++++, textura aquosa e leve. <b>Variação do protetor</b> pra não enjoar. Reaplique ao longo do dia."],
-  ["Booster Mode","<b>Eletroporação:</b> abre microcanais temporários e empurra os ativos mais fundo. Use com serums potentes (niacinamida, PDRN). ~5 min em movimentos ascendentes, com produto à base de água. Modo de 'turbinar a absorção'."],
-  ["Mask Mode","Modo pra usar <b>junto com máscara de tecido</b>: as correntes otimizam a entrada dos ingredientes. Coloque a máscara, passe o aparelho por cima ~5 min. No sábado o nível é mais alto."],
-  ["MC Mode","<b>Microcorrente:</b> firmeza, volume e preenchimento de linhas finas — 'lifting' sem agulha. Trabalhe nasolabial, mandíbula e maçãs, sempre ascendente. Combine com serum hidratante/plumping."],
-  ["Air Shot Mode","<b>Microagulhamento elétrico suave:</b> refina poros, esfolia de leve e melhora a textura. É o modo mais delicado, então a pele precisa estar <b>limpa e seca</b> antes. Foque na Zona T. Toque suave, 3-5 min."],
-  ["innisfree Retinol","Seu retinol mais gentil (Cica + barreira). Renova a pele, estimula colágeno e suaviza linhas. Camada finíssima (tamanho de uma ervilha), sempre seguido de hidratante de barreira. Comece 1x/semana."],
-  ["Retinal Shot","celimax Retinal Shot Tightening Booster: <b>retinal 0.1% + Matrixyl 3000 + pantenol</b>. Retinal é uma forma mais potente de vitamina A (mais forte que o seu retinol iniciante). Use só quando a pele já estiver acostumada ao retinol — opção avançada."],
-  ["Epidrat","Hidratante calmante com vitamina B5 (Mantecorp), usado <b>logo após o retinol</b>. Protege e repara a barreira, evitando descamação. Em noite de retinol, entra no lugar do hidratante normal."],
-  ["345 Relief","Creme calmante de barreira (ceramida/centella). Acalma e repara — ótimo em noites pós-ativos ou de pele mais reativa."],
-  ["medicube PDRN Pink Collagen","Hidratante rico em PDRN + colágeno (medicube, pote rosa). <b>Sela a rotina</b>, reforça a barreira e dá efeito de pele densa. Ótimo como última camada nas noites mais intensas."],
-  ["MEDITHERAPY Hyaluronic","Máscara de tecido de ácido hialurônico, usada <b>durante o Mask Mode</b> pra hidratação intensa. ~5-10 min; o aparelho ajuda a penetrar."],
-  ["Quality First","Máscara de tecido com vitamina C (VC100) — hidratação + glow. Use durante o Mask Mode."],
-  ["Collagen Mask","Máscara de tecido de colágeno pra firmeza e hidratação. Boa nos dias de Mask Mode no mês de firmeza."],
-  ["VT Anti-Gravity","Máscara/lifting mask da VT com tecnologia reedle, foco em <b>efeito tensor e firmeza</b>. Usada no Mask Mode do sábado pra um tratamento mais 'premium'."],
-  ["Beauty of Joseon Revive Eye","Sérum para os olhos com ginseng + retinal — versão suave de vitamina A pra <b>firmeza e recuperação</b> da área dos olhos."],
-  ["SANA Soy Milk","Creme de olhos japonês (SANA) com isoflavonas de soja — <b>suave e hidratante</b>, apoia o colágeno. Boa opção de manhã."],
-  ["Reedle Shot Lifting Eye","Creme de olhos VT Reedle Shot com microagulhas de sílica, foco em <b>firmeza e linhas finas</b> da área. Quantidade mínima, batendo de leve com o dedo anelar."],
-  ["Kahi","Bálsamo multifuncional Kahi (stick) para os olhos e pontos secos, com óleo de salmão e ceramidas. <b>Nutre e protege</b> a área delicada. Deslize o stick e bata de leve."],
-  ["Vaseline","Geleia oclusiva pra <b>'slugging'</b>: uma camada fininha por cima de tudo na última etapa, em noites muito secas, pra travar a hidratação enquanto dorme. 1x/semana basta."],
-  ["SEM aparelho","Domingo é <b>dia de descanso do aparelho</b>: depois de 6 dias de estímulo, a pele recupera a barreira. Só rotina básica e suave, sem aparelho e sem retinol — o 'recovery day'."],
+  ["Senka","Espuma de limpeza japonesa super suave, com seda e colágeno. Limpa sem ressecar — ideal pra pele seca.","Faça espuma com um pouco de água nas mãos, massageie o rosto em movimentos circulares por ~30s e enxágue com água morna."],
+  ["ilso Super Melting","Tônico/softener (ilso) que 'derrete' o sebo. Mais indicado pra controlar oleosidade/cravos — opcional pra você.","Se for usar, embeba um algodão e passe só na zona T (nariz/queixo), sem esfregar o rosto todo."],
+  ["Numbuzin 9+","Sua essência numbuzin Lifting-sil 9+: <b>lifting, firmeza e hidratação</b>. Tonifica e prepara a pele para os ativos seguintes.","2-3 gotas no rosto; espalhe e bata de leve com as pontas dos dedos até absorver, logo após o tônico/aparelho."],
+  ["Hada Labo Gokujyun","Hada Labo Gokujyun Premium (frasco dourado): loção com vários tipos de ácido hialurônico. Pilar de hidratação pra pele seca.","Algumas gotas na palma da mão e pressione no rosto em camadas, sem esfregar. Pode repetir 2 camadas para mais hidratação."],
+  ["Shirojyun","Hada Labo Shirojyun Premium (pote azul): clareadora com arbutina + ácido hialurônico. <b>Clareia e hidrata</b>.","Uma camada fina como hidratante final, espalhando do centro do rosto para fora."],
+  ["Niacinamide","Anua 10+ (frasco vermelho): 10% niacinamida + 4% TXA. <b>Fortalece a barreira</b> e previne/clareia manchas.","3-4 gotas de manhã, após o tônico/vit. C; espalhe e deixe absorver antes do hidratante."],
+  ["Anua 100+","Anua 100+ (frasco verde): PDRN + ácido hialurônico em cápsulas. <b>Hidratação profunda e plumping</b>.","3-4 gotas à noite; deixe na pele e passe o aparelho (Booster/MC) por cima, ajudando a penetrar."],
+  ["goodal Vita","Vitamina C (Dark Spot Care e Vita C·E Tea) para <b>antioxidante, glow e clareamento leve</b>. ⚠️ Não junte com retinol no mesmo momento.","3-4 gotas de manhã após o tônico, antes do hidratante e do protetor. Espere ~1 min para absorver."],
+  ["Vitamin C Capsule","Sérum de vitamina C em cápsulas, textura levemente oleosa — bom pra dar <b>glow numa pele seca</b>.","2-3 gotas misturadas ao hidratante de manhã (ou direto na pele antes de hidratar)."],
+  ["Bringgreen","Bringgreen Zinc Teca Blemish Serum: zinco + centella. <b>Calmante e anti-oleosidade pontual</b>.","Só nos pontos com vermelhidão ou espinha, batendo de leve. Não precisa no rosto todo."],
+  ["Skin Aqua","Protetor solar Skin Aqua FPS50+ leve, à base de água, que reforça a barreira. <b>Inegociável todos os dias.</b>","Última etapa da manhã: aplique a medida de 2 dedos (dedo indicador + médio) no rosto e pescoço. Reaplique a cada ~2-3h se ficar exposta."],
+  ["Bioré UV","Protetor Bioré UV Aqua Rich FPS50+ PA++++, textura aquosa e leve. <b>Variação do protetor</b> pra não enjoar.","Camada generosa por último de manhã; espalhe bem e reaplique ao longo do dia."],
+  ["Booster Mode","<b>Eletroporação:</b> abre microcanais temporários e empurra os ativos mais fundo. Modo de 'turbinar a absorção'.","Com um serum à base de água na pele, deslize o aparelho por ~5 min em movimentos ascendentes (de baixo pra cima)."],
+  ["Mask Mode","Modo pra usar <b>junto com máscara de tecido</b>: as correntes otimizam a entrada dos ingredientes.","Coloque a máscara de tecido no rosto e passe o aparelho por cima dela por ~5 min."],
+  ["MC Mode","<b>Microcorrente:</b> firmeza, volume e preenchimento de linhas finas — 'lifting' sem agulha.","Com serum na pele, deslize sempre de baixo pra cima nas linhas nasolabiais, mandíbula e maçãs, por ~5 min."],
+  ["Air Shot Mode","<b>Microagulhamento elétrico suave:</b> refina poros, esfolia de leve e melhora a textura. O modo mais delicado.","Pele <b>limpa e seca</b> antes; toque suave em movimentos curtos, focando na Zona T, por 3-5 min."],
+  ["innisfree Retinol","Seu retinol mais gentil (Cica + barreira). Renova a pele, estimula colágeno e suaviza linhas.","Espere 2 min após o aparelho; aplique uma quantidade do tamanho de uma ervilha, em camada fina, evitando o contorno dos olhos. Hidratante de barreira depois."],
+  ["Retinal Shot","celimax Retinal Shot: <b>retinal 0.1% + Matrixyl 3000 + pantenol</b>. Retinal é uma vitamina A mais potente que o seu retinol iniciante — opção avançada.","Igual ao retinol: camada finíssima à noite. Comece 1-2x/semana e só aumente se a pele estiver tranquila."],
+  ["Epidrat","Hidratante calmante com vitamina B5 (Mantecorp), usado <b>logo após o retinol</b>. Protege e repara a barreira.","Camada generosa como último passo, logo após o retinol/retinal."],
+  ["345 Relief","Creme calmante de barreira (ceramida/centella). Acalma e repara — ótimo em noites pós-ativos.","Como hidratante final, na quantidade que a pele pedir."],
+  ["medicube PDRN Pink Collagen","Hidratante rico em PDRN + colágeno (medicube, pote rosa). <b>Sela a rotina</b> e dá efeito de pele densa.","Estale uma cápsula rosa, espalhe o creme e finalize como última camada à noite."],
+  ["MEDITHERAPY Hyaluronic","Máscara de tecido de ácido hialurônico para <b>hidratação intensa</b>.","Aplique a máscara e deixe ~10 min (com o Mask Mode por cima). Descarte e bata o excesso de essência na pele."],
+  ["Quality First","Máscara de tecido com vitamina C (VC100) — hidratação + glow.","Máscara ~10 min; depois bata o sérum restante na pele e siga com hidratante."],
+  ["Collagen Mask","Máscara de tecido de colágeno pra firmeza e hidratação.","Deixe ~10-15 min; finalize batendo o excesso de essência na pele."],
+  ["VT Anti-Gravity","Máscara/lifting mask da VT, foco em <b>efeito tensor e firmeza</b>.","Use ~10-15 min durante o Mask Mode; finalize com hidratante."],
+  ["Beauty of Joseon Revive Eye","Sérum para os olhos com ginseng + retinal — <b>firmeza e recuperação</b> da área.","1 bombada; faça pontinhos ao redor dos olhos e bata de leve com o dedo anelar (o mais fraquinho)."],
+  ["SANA Soy Milk","Creme de olhos japonês (SANA) com isoflavonas de soja — <b>suave e hidratante</b>.","Quantidade de um grão de arroz, batendo de leve sob os olhos."],
+  ["Reedle Shot Lifting Eye","Creme de olhos VT Reedle Shot com microagulhas de sílica, foco em <b>firmeza e linhas finas</b>.","Quantidade mínima, batendo de leve no contorno. Pode formigar um pouco por causa das microagulhas — é normal."],
+  ["Kahi","Bálsamo multifuncional Kahi (stick) para olhos e pontos secos, com óleo de salmão e ceramidas. <b>Nutre e protege</b>.","Deslize o stick direto sob os olhos ou pontos secos e bata com o dedo até absorver."],
+  ["Vaseline","Geleia oclusiva pra <b>'slugging'</b>: trava a hidratação enquanto você dorme. 1x/semana basta.","Camada bem fininha por cima de TUDO, só na última etapa, em noites secas. Evite se a pele estiver com tendência a espinhas."],
+  ["SEM aparelho","Domingo é <b>dia de descanso do aparelho</b>: a pele recupera a barreira após a semana.","Faça só a rotina básica e suave, sem aparelho e sem retinol — deixe a pele descansar."],
 ];
 function explain(name){
   const n=name.toLowerCase();
   const hit=glossary.find(g=>n.indexOf(g[0].toLowerCase())>-1);
-  return hit?hit[1]:"";
+  return hit||null;
 }
 
 /* ===== ESTRUTURA DO APARELHO (fixa por dia) ===== */
@@ -325,18 +327,19 @@ const weekBase=[
 
 /* ===== PALETA POR MÊS ===== */
 const plan=[
-  {mn:"Mês 1",mt:"Reconstruir barreira",
-   foco:"<b>Hidratação profunda e barreira.</b> Retinol entra bem devagar — só 1x/semana (segunda). Pele calma e nutrida antes de pisar fundo nos ativos.",
-   retinolDays:[0],
+  {mn:"Mês 1",mt:"Barreira + ativos diários",
+   foco:"<b>Hidratação profunda</b> com o trio que sua análise pede <b>todos os dias</b>: ácido hialurônico + vitamina C de manhã, retinol à noite. Retinol já <b>4x/semana</b> (sua escolha) — barreira reforçada toda noite.",
+   retinolDays:[0,1,3,4],
    morning:[
      ["Senka Perfect Whip","Limpeza suave"],
-     ["Hada Labo Gokujyun Premium (loção)","Tônico hialurônico — hidratação em camadas"],
+     ["Hada Labo Gokujyun Premium (loção)","Tônico de ácido hialurônico — hidratação em camadas (diário)"],
+     ["goodal Vita-C Dark Spot Care Serum","Vitamina C — antioxidante e clareamento (diário)"],
      ["Anua 10+ Niacinamide + TXA","Sérum — fortalece a barreira e previne manchas"],
      ["VT Reedle Shot Lifting Eye Cream","Área dos olhos"],
      ["Hada Labo Shirojyun Premium (creme azul)","Hidratante rico — sela a água","bar"],
      ["Skin Aqua Super Moisture UV SPF50+","Protetor solar"],
    ],
-   toner:"ilso Super Melting Sebum Softener",
+   toner:"Hada Labo Gokujyun Premium (loção)",
    boosterSerum:"Anua 10+ Niacinamide + TXA",
    mcSerum:"Anua 100+ PDRN + Hyaluron — plumping",
    maskSheet:"MEDITHERAPY Hyaluronic Acid Mask",
@@ -349,12 +352,12 @@ const plan=[
    treat:"<b>Tratamento:</b> máscara MEDITHERAPY (hialurônico) 2x/semana. A esfoliação suave já vem do <b>Air Shot Mode (quinta)</b> — não precisa de ácido extra agora."},
 
   {mn:"Mês 2",mt:"Glow & textura",
-   foco:"Pele mais forte → entra <b>vitamina C de manhã</b> (antioxidante + glow) e foco em textura. Retinol sobe pra 2x/semana (segunda + quinta).",
-   retinolDays:[0,3],
+   foco:"Pele mais forte, foco em <b>glow e textura</b>. Ácido hialurônico e vitamina C seguem <b>diários</b> (aqui você varia a vit. C); retinol sobe para <b>5x/semana</b>.",
+   retinolDays:[0,1,3,4,5],
    morning:[
      ["Senka Perfect Whip","Limpeza suave"],
-     ["Hada Labo Gokujyun Premium (loção)","Tônico hialurônico"],
-     ["goodal Vita-C Dark Spot Care Serum","Sérum de vitamina C — antioxidante e glow"],
+     ["Hada Labo Gokujyun Premium (loção)","Tônico de ácido hialurônico (diário)"],
+     ["goodal Vita C·E Tea Serum","Vitamina C — antioxidante e glow (diário, variação)"],
      ["SANA Soy Milk Eye Cream","Olhos (variação suave)"],
      ["medicube PDRN Pink Collagen Cream","Hidratante com PDRN + colágeno","bar"],
      ["Bioré UV Aqua Rich SPF50+","Protetor solar (variação)"],
@@ -372,18 +375,19 @@ const plan=[
    treat:"<b>Tratamento:</b> máscara Quality First VC100 ou Vita Rice 1x/semana. ⚠️ Vit. C de manhã, retinol à noite — nunca juntos. A esfoliação fica por conta do <b>Air Shot Mode (quinta)</b>, suave e suficiente para a textura."},
 
   {mn:"Mês 3",mt:"Firmeza & anti-idade",
-   foco:"Retinol consolidado (2x/semana, dá pra testar 3x). Foco em <b>colágeno e elasticidade</b> (eixo T). Camadas mais ricas e slugging nas noites mais secas.",
-   retinolDays:[0,3],
+   foco:"Foco em <b>colágeno e elasticidade</b> (eixo T). Retinol quase diário (<b>6x/semana</b>) — alterne o retinol gentil com o retinal celimax nas noites que quiser. HA + vit. C seguem diários. Camadas ricas e slugging.",
+   retinolDays:[0,1,2,3,4,5],
    morning:[
      ["Senka Perfect Whip","Limpeza suave"],
-     ["ilso Super Melting Sebum Softener","Tônico"],
+     ["Hada Labo Gokujyun Premium (loção)","Tônico de ácido hialurônico (diário)"],
      ["Anua 10+ Niacinamide + TXA","Sérum — barreira + firmeza"],
-     ["Vitamin C Capsule Serum (2-3 gotas)","Vit. C em cápsulas no hidratante — glow para pele seca"],
+     ["Vitamin C Capsule Serum (2-3 gotas)","Vit. C em cápsulas no hidratante — glow diário"],
      ["VT Reedle Shot Lifting Eye Cream","Olhos"],
      ["medicube PDRN Pink Collagen Cream","Hidratante colágeno","bar"],
      ["Skin Aqua / Bioré UV SPF50+","Protetor solar"],
    ],
-   toner:"ilso Super Melting Sebum Softener",
+   toner:"Hada Labo Gokujyun Premium (loção)",
+   retinalNote:true,
    boosterSerum:"Anua 10+ Niacinamide + TXA",
    mcSerum:"Anua 100+ PDRN + Hyaluron — plumping",
    maskSheet:"Collagen Mask",
@@ -392,14 +396,14 @@ const plan=[
    eye:"Beauty of Joseon Revive Eye",
    moist:"medicube PDRN Pink Collagen Cream",
    barrier:"Epidrat Calm B5",
-   retinolProduct:"innisfree Retinol Cica Barrier",
-   treat:"<b>Tratamento:</b> máscara de colágeno + patches de lifting 1-2x/semana · Retinol Serum Mask ocasional (não na mesma noite do retinol em creme) · slugging com Vaselina nas noites muito secas. Se a pele já estiver firme no retinol, dá pra testar o celimax Retinal 1x/semana."},
+   retinolProduct:"innisfree Retinol Cica (ou celimax Retinal — alterne)",
+   treat:"<b>Tratamento:</b> máscara de colágeno + patches de lifting 1-2x/semana · slugging com Vaselina nas noites muito secas. <b>Alterne</b> innisfree Retinol (gentil) e celimax Retinal (mais forte) — ex: retinal 2x/semana, retinol nas outras. Hidratante de barreira sempre depois."},
 ];
 
 /* ===== CONSTRUTOR DE NOITE (mês × dia) ===== */
 function buildNight(mi,di){
   const m=plan[mi], d=weekBase[di];
-  const isRet = d.retinolDay && m.retinolDays.includes(di);
+  const isRet = !d.rest && m.retinolDays.includes(di);
   const S=[];
   S.push(["Senka Perfect Whip","Limpeza","day"]);
   S.push([m.toner,"Tônico","day"]);
@@ -425,7 +429,7 @@ function buildNight(mi,di){
     S.push([m.lift,"Lifting (após o aparelho)","day"]);
   }
   if(isRet){
-    S.push([m.retinolProduct,"RETINOL · espere 2 min após o aparelho · camada fina (ervilha)","retinol"]);
+    S.push([m.retinolProduct,"RETINOL ou RETINAL · espere 2 min após o aparelho · camada fina (ervilha) · hidratante de barreira depois","retinol"]);
   }
   S.push([m.eye,"Olhos","day"]);
   if(isRet){
@@ -441,13 +445,15 @@ const badgeMap={day:["b-day","produto"],device:["b-dev","aparelho"],retinol:["b-
 function stepHTML(s){
   const [name,desc,type,freq]=s;
   const [bc,bt]=badgeMap[type]||badgeMap.day;
-  const why=explain(name);
+  const g=explain(name);
+  const why=g?g[1]:"";
+  const how=g?g[2]:"";
   return `<div class="step ${type||'day'}">
     <div class="num">•</div>
     <div class="step-body">
       <div class="pname">${name}${freq?`<span class="freq">${freq}</span>`:''}</div>
       <span class="badge ${bc}">${bt}</span>
-      <div class="detail"><div class="note">📍 ${desc}</div>${why?`<div class="why">${why}</div>`:''}</div>
+      <div class="detail"><div class="note">📍 ${desc}</div>${why?`<div class="why">${why}</div>`:''}${how?`<div class="how">💆 <b>Como usar:</b> ${how}</div>`:''}</div>
     </div>
     <div class="chev">▸</div>
   </div>`;
@@ -468,7 +474,7 @@ plan.forEach((p,i)=>{
 function renderWeek(){
   const w=document.getElementById('week');w.innerHTML='';
   weekBase.forEach((d,i)=>{
-    const isRet=d.retinolDay && plan[curMonth].retinolDays.includes(i);
+    const isRet=!d.rest && plan[curMonth].retinolDays.includes(i);
     const el=document.createElement('div');
     el.className='day'+(d.rest?' rest':'')+(i===curDay?' sel':'');
     el.innerHTML=`<div class="dn">${d.n}</div><div class="mode">${d.rest?'Descanso':d.mode.replace(' Mode','')}</div><div class="ret">${d.rest?'💤':(isRet?'✓':'·')}</div>`;
@@ -484,7 +490,7 @@ function renderMorning(){
 }
 function renderNight(){
   const d=weekBase[curDay];const m=plan[curMonth];
-  const isRet=d.retinolDay && m.retinolDays.includes(curDay);
+  const isRet=!d.rest && m.retinolDays.includes(curDay);
   const tag=isRet?' + RETINOL':(d.rest?'':' (sem retinol)');
   const c=document.getElementById('night-card');
   const steps=buildNight(curMonth,curDay);
@@ -513,9 +519,9 @@ document.getElementById('modes').innerHTML=modes.map(m=>`
 
 /* retinol */
 const proto=[
-  ["1-2 (AGORA)","1x/semana (segunda)","innisfree Retinol Cica","Observe descamação, vermelhidão ou irritação",true],
-  ["3-4","2x/semana (seg + qui)","innisfree Retinol Cica","Se a pele estiver ok, adiciona quinta-feira",false],
-  ["Mês 2+","2-3x/semana","innisfree Retinol Cica (+ Retinol Mask ocasional)","Aumenta conforme sua tolerância",false],
+  ["Mês 1 (AGORA)","4x/semana","innisfree Retinol Cica","Sua escolha. Pele resistente costuma tolerar — observe descamação/ardência",true],
+  ["Mês 2","5x/semana","innisfree Retinol / celimax Retinal","Aumenta se a pele estiver tranquila",false],
+  ["Mês 3","6x/semana (quase diário)","Retinol + Retinal alternados","Sempre com hidratante de barreira depois",false],
 ];
 document.getElementById('proto').innerHTML=`<tr><th>Semana</th><th>Frequência</th><th>Produto</th><th>Observação</th></tr>`
   +proto.map(r=>`<tr class="${r[4]?'now':''}"><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('');
@@ -538,7 +544,8 @@ const rules=[
   ["bad","🚫","Retinol sem hidratante pós-retinol","Sempre use Epidrat ou medicube PDRN depois."],
   ["good","✅","SEMPRE: protetor solar todos os dias","Especialmente em dias com retinol."],
   ["good","✅","SEMPRE: deixe a pele descansar no domingo","Sem aparelho, sem retinol."],
-  ["good","✅","SEMPRE: comece o retinol devagar","1x/semana no Mês 1, subindo conforme a tolerância."],
+  ["good","✅","Você optou por retinol 4x+/semana","Sua pele é resistente e costuma tolerar bem. Mas fique de olho: se descamar, arder ou repuxar, reduza a frequência por uns dias e reforce a barreira. Hidratante de barreira em TODA noite de retinol/retinal."],
+  ["good","✅","Trio diário (HA + Vit. C + retinol)","Como sua análise sugere: ácido hialurônico e vitamina C todos os dias de manhã, retinol/retinal à noite. Vit. C de manhã e retinol à noite — nunca no mesmo momento."],
 ];
 document.getElementById('rules').innerHTML=rules.map(r=>`
   <div class="rule ${r[0]}"><div class="ic">${r[1]}</div><div><div class="t">${r[2]}</div><div class="d">${r[3]}</div></div></div>`).join('');
@@ -546,6 +553,7 @@ document.getElementById('rules').innerHTML=rules.map(r=>`
 /* opiniões */
 const opinions=[
   ["good","🧼","Limpeza: fique na Senka","Suave e perfeita para pele seca. <b>Evite a Darrow Actine no dia a dia</b> (gel pra pele oleosa/acne) — reserve só para um ponto específico. Neutrogena gel serve de reserva, mas a Senka é mais gentil."],
+  ["good","💦","Tônico: Hada Labo no lugar do ilso","Tirei o <b>ilso Super Melting Sebum Softener</b> da rotina — ele é um 'derrete-sebo' pra usar com algodão no nariz, e você não tem oleosidade/cravos ali. No lugar entra o <b>Hada Labo Gokujyun</b> (ácido hialurônico), que hidrata e te dá HA todo dia. O ilso fica de reserva, só se um dia precisar na zona T."],
   ["good","🌙","Retinol: comece pelo mais gentil","Use o <b>innisfree Retinol Cica</b> primeiro (o mais suave). O <b>celimax Retinal</b> é mais forte (retinal) — deixe pra mais tarde, quando a pele já estiver acostumada. As máscaras de retinol entram ocasionalmente, em dias separados."],
   ["good","🍊","Vitamina C de manhã","Você tem três opções (goodal Dark Spot, goodal Vita C·E Tea e a Vitamin C Capsule) — todas de manhã, antioxidante + glow. <b>Nunca no mesmo período que o retinol.</b>"],
   ["good","💚","Dois 'Anua' diferentes","O <b>10+</b> (vermelho) é niacinamida + TXA, pra barreira/manchas de manhã. O <b>100+</b> (verde) é PDRN + hialurônico, pra hidratação e plumping — ótimo com o aparelho à noite."],
@@ -560,7 +568,7 @@ document.getElementById('opinions').innerHTML=opinions.map(o=>`
 /* inventário */
 const inventory=[
   ["🧼 Limpeza",["<b>Senka Perfect Whip</b> (amarela + azul) — espuma suave (uso diário)","Neutrogena Gel de Limpeza Facial — reserva","Darrow Actine — gel p/ pele oleosa, só pontual / zona T","お米 Rice Pack — limpeza-máscara de arroz ocasional"]],
-  ["💦 Tônico / Essência",["<b>ilso Super Melting Sebum Softener</b> — tônico (uso diário)","<b>Hada Labo Gokujyun Premium</b> (loção dourada) — hialurônico","<b>Numbuzin 9+ Lifting-sil Essence</b> — lifting + hidratação (diário)","ilso Skin Wrap Cotton Pad — algodão de apoio"]],
+  ["💦 Tônico / Essência",["<b>Hada Labo Gokujyun Premium</b> (loção dourada) — hialurônico (tônico diário)","<b>Numbuzin 9+ Lifting-sil Essence</b> — lifting + hidratação (diário)","ilso Super Melting Sebum Softener — opcional, só p/ oleosidade/cravos no nariz","ilso Skin Wrap Cotton Pad — algodão de apoio"]],
   ["🧪 Sérum",["<b>Anua 10+ Niacinamide + TXA</b> (vermelho) — barreira + manchas","<b>Anua 100+ PDRN + Hyaluron</b> (verde) — hidratação + plumping","goodal Vita-C Dark Spot Care — vit. C clareadora","goodal Vita C·E Tea Serum — vit. C antioxidante","Vitamin C Capsule Serum — vit. C em cápsulas (glow)","Bringgreen Zinc Teca Blemish Serum — calmante pontual"]],
   ["🌙 Retinol / Retinal",["<b>innisfree Retinol Cica Barrier</b> — o mais gentil (começar por aqui)","celimax Retinal Shot Tightening Booster — retinal, opção avançada","Retinol Serum Mask + Retinol Mask — máscaras ocasionais"]],
   ["🫙 Hidratante / Barreira",["<b>medicube PDRN Pink Collagen Capsule Cream</b> — PDRN + colágeno","<b>Epidrat Calm B5</b> — reparo pós-retinol","Hada Labo Shirojyun Premium (pote azul) — clareia + hidrata","345 Relief Cream — calmante","medicube R.E.D Blemish / Red Erasing — vermelhidão pontual","Vaseline Soothing Jelly — slugging"]],
