@@ -352,11 +352,12 @@ const plan=[
    treat:"<b>Tratamento:</b> máscara MEDITHERAPY (hialurônico) 2x/semana. A esfoliação suave já vem do <b>Air Shot Mode (quinta)</b> — não precisa de ácido extra agora."},
 
   {mn:"Mês 2",mt:"Glow & pigmentação",
-   foco:"Pele adaptada ao retinol. Vitamina C sobe para a versão <b>CE+TXA</b> (mais potente). Entram o <b>medicube PDRN Pink Collagen</b> no hidratante noturno e o <b>Anua 100+ PDRN</b> nos dias de MC Mode. Retinol sobe para <b>5x/semana</b>. Anua 10+ consolida-se como base permanente manhã e noite.",
+   foco:"Vitamina C sobe para a versão <b>CE+TXA</b> mais potente. Entra o <b>PDRN Pink Collagen</b> manhã e noite. <b>Anua 10+ fica só à noite</b> — o Goodal TXA já cobre barreira de manhã. Retinol sobe para <b>5x/semana</b>.",
    retinolDays:[0,1,3,4,5],
    morning:[
      ["Senka Perfect Whip","Limpeza suave"],
      ["Hada Labo Gokujyun Premium (loção)","Tônico de ácido hialurônico (diário)"],
+     ["Anua 10+ Niacinamide + TXA","Sérum — manchas + barreira (diário)"],
      ["goodal Vita C·E TXA Serum","Vitamina C·E + TXA — clareamento mais intenso que o mês 1"],
      ["VT Reedle Shot Lifting Eye Cream","Área dos olhos"],
      ["medicube PDRN Pink Collagen Cream","Hidratante com PDRN + colágeno — sela a rotina","bar"],
@@ -370,21 +371,19 @@ const plan=[
    lift:"Numbuzin 9+ Lifting-sil Essence",
    eye:"Kahi Eye Balm",
    moist:"medicube PDRN Pink Collagen Cream",
-   barrier:"Epidrat Calm B5",
    retinolProduct:"innisfree Retinol Cica Barrier",
-   treat:"<b>Tratamento:</b> máscara Vita Rice (Vit. C) na terça via Mask Mode, Collagen Mask no sábado. Vit. C de manhã, retinol à noite — nunca juntos. Anua 10+ entra em toda noite antes do retinol — niacinamida reduz inflamação e protege a barreira."},
+   treat:"<b>Tratamento:</b> máscara Vita Rice (Vit. C) na terça via Mask Mode, Collagen Mask no sábado. Vit. C de manhã, retinol à noite — nunca juntos. Anua 10+ toda noite como barreira antes do retinol."},
 
   {mn:"Mês 3",mt:"Elasticidade & firmeza",
-   foco:"Foco em <b>colágeno e elasticidade</b> — os piores scores do diagnóstico (32 e 35). Vitamina C troca para o <b>Capsule Serum</b> (textura diferente, glow). Entra o <b>Calimox Retinal Shot</b> (mais potente que retinol) 2x/semana. Hidratante noturno vira <b>Hada Labo Shirojyun</b> para clareamento. Retinol/Retinal alterna <b>6x/semana</b>.",
+   foco:"Foco em <b>colágeno e elasticidade</b> — os piores scores do diagnóstico (32 e 35). Vitamina C troca para o <b>Capsule Serum</b>. Entra o <b>Calimox Retinal Shot</b> 2x/semana. Numbuzin volta de manhã para potencializar o lifting. Retinol/Retinal alterna <b>6x/semana</b>.",
    retinolDays:[0,1,2,3,4,5],
    morning:[
      ["Senka Perfect Whip","Limpeza suave"],
      ["Hada Labo Gokujyun Premium (loção)","Tônico de ácido hialurônico (diário)"],
-     ["Numbuzin 9+ Lifting-sil Essence","Lifting + peptídeos (diário)"],
-     ["Anua 10+ Niacinamide + TXA","Sérum — barreira + clareamento (diário)"],
-     ["Vitamin C Capsule Serum","Vitamina C em cápsulas — textura diferente, glow concentrado"],
+     ["Numbuzin 9+ Lifting-sil Essence","Lifting + 50 peptídeos + NAD+ (diário)"],
+     ["Vitamin C Capsule Serum","Vitamina C em cápsulas — glow concentrado"],
      ["VT Reedle Shot Lifting Eye Cream","Área dos olhos"],
-     ["medicube PDRN Pink Collagen Cream","Hidratante com PDRN + colágeno — foco em elasticidade","bar"],
+     ["medicube PDRN Pink Collagen Cream","Hidratante com PDRN + colágeno","bar"],
      ["Skin Aqua / Bioré UV Aqua Rich SPF50+","Protetor solar (alterne os dois)"],
    ],
    toner:"Hada Labo Gokujyun Premium (loção)",
@@ -395,10 +394,9 @@ const plan=[
    maskSheetSat:"VT Anti-Gravity Reedle Shot Lifting Mask",
    lift:"Numbuzin 9+ Lifting-sil Essence",
    eye:"Beauty of Joseon Revive Eye",
-   moist:"Hada Labo Shirojyun Premium (creme azul)",
-   barrier:"Epidrat Calm B5",
+   moist:"medicube PDRN Pink Collagen Cream",
    retinolProduct:"Calimox Retinal Shot (2x/semana) · innisfree Retinol Cica nas outras noites",
-   treat:"<b>Tratamento:</b> Calimox Retinal Shot 2x/semana (mais potente — retinal 0,1%); Retinol Cica nas outras 4 noites. Anua 10+ entra antes do retinal/retinol em toda noite. Epidrat B5 sempre depois. Máscara VT Anti-Gravity no sábado via Mask Mode — foco lifting."},
+   treat:"<b>Tratamento:</b> Calimox Retinal Shot 2x/semana (retinal 0,1% — mais potente); Retinol Cica nas outras 4 noites. Anua 10+ toda noite antes do retinal/retinol. PDRN finaliza. Máscara VT Anti-Gravity no sábado via Mask Mode."},
 ];
 
 /* ===== CONSTRUTOR DE NOITE (mês × dia) ===== */
@@ -406,64 +404,93 @@ function buildNight(mi,di){
   const m=plan[mi], d=weekBase[di];
   const isRet = !d.rest && m.retinolDays.includes(di);
   const S=[];
-
   S.push(["Senka Perfect Whip","Limpeza","day"]);
   S.push([m.toner,"Tônico","day"]);
 
+  // MÊS 1: lógica original intacta
+  if(mi===0){
+    if(d.rest){
+      S.push(["SEM aparelho — descanso","Deixa a pele descansar após a semana de aparelho · recovery","device"]);
+      S.push([m.lift,"Lifting suave","day"]);
+      S.push([m.eye,"Olhos — recovery","day"]);
+      S.push([m.moist,"Hidratante reparador","bar"]);
+      return S;
+    }
+    if(d.kind==="mask"){
+      S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+d.note,"device"]);
+      S.push([d.sat?m.maskSheetSat:m.maskSheet,"Máscara de tecido — durante o aparelho","day"]);
+      S.push([m.lift,"Lifting (após a máscara)","day"]);
+    } else if(d.kind==="mc"){
+      S.push([m.lift,"Lifting","day"]);
+      S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+d.note,"device"]);
+      S.push([m.mcSerum,"Hidratação + plumping — deixe na pele do aparelho","day"]);
+    } else {
+      const ctx = d.kind==="air" ? "pele LIMPA e SECA antes" : "com "+m.boosterSerum;
+      S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+ctx+" · "+d.note,"device"]);
+      S.push([m.lift,"Lifting (após o aparelho)","day"]);
+    }
+    if(isRet) S.push([m.retinolProduct,"RETINOL · espere 2 min após o aparelho · camada fina (ervilha)","retinol"]);
+    S.push([m.eye,"Olhos","day"]);
+    S.push([isRet?m.barrier:m.moist,isRet?"Hidratante de barreira — pós-retinol (essencial)":"Hidratante final","bar"]);
+    return S;
+  }
+
+  // MESES 2-3
+  // Ordem: Tônico → produto pré-aparelho → Aparelho → Anua 10+ → [Retinol OU Numbuzin(m3)] → Olhos → PDRN
   if(d.rest){
-    S.push(["SEM aparelho — descanso","Deixa a pele descansar após a semana de aparelho · recovery","device"]);
-    S.push([m.lift,"Lifting suave","day"]);
+    S.push(["SEM aparelho — descanso","Deixa a pele descansar · recovery","device"]);
+    S.push(["Anua 10+ Niacinamide + TXA","Barreira + clareamento — recovery day","day"]);
+    if(mi===2) S.push([m.lift,"Lifting suave (NAD+ + peptídeos)","day"]);
     S.push([m.eye,"Olhos — recovery","day"]);
-    S.push([m.moist,"Hidratante reparador","bar"]);
+    S.push([m.moist,"Hidratante reparador — PDRN + colágeno","bar"]);
     return S;
   }
 
   if(d.kind==="mask"){
-    // Máscara ANTES do aparelho
-    S.push([d.sat?m.maskSheetSat:m.maskSheet,"Aplique a máscara de tecido — o Mask Mode vai potencializar a absorção","day"]);
-    S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+d.note+" · passe sobre a máscara coberta","device"]);
+    // Máscara ANTES → Aparelho → Anua 10+ → [Retinol ou Numbuzin m3]
+    S.push(["Medicube "+d.mode+" + "+(d.sat?m.maskSheetSat:m.maskSheet),"Nível "+d.lvl+" · "+d.note+" · aplique a máscara e passe o aparelho por cima","device"]);
+    S.push(["Anua 10+ Niacinamide + TXA","Barreira + clareamento","day"]);
     if(isRet){
-      // Anua 10+ omitido aqui: a máscara já entregou hidratação/barreira suficiente
       S.push([m.retinolProduct,"RETINOL · espere 2 min após o aparelho · camada fina","retinol"]);
-    } else {
-      S.push([m.lift,"Lifting (após máscara)","day"]);
+    } else if(mi===2){
+      S.push([m.lift,"Lifting (NAD+ + peptídeos)","day"]);
     }
   }
   else if(d.kind==="mc"){
-    S.push([m.mcSerum,"Serum — aplique antes do aparelho para potencializar o plumping","day"]);
+    // Serum PDRN ANTES → Aparelho → Anua 10+ → [Retinol ou Numbuzin m3]
+    S.push([m.mcSerum,"Serum PDRN — aplique antes do MC Mode para potencializar o plumping","day"]);
     S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+d.note,"device"]);
+    S.push(["Anua 10+ Niacinamide + TXA","Barreira + clareamento","day"]);
     if(isRet){
       S.push([m.retinolProduct,"RETINOL · espere 2 min após o aparelho · camada fina","retinol"]);
-    } else {
-      S.push([m.lift,"Lifting final","day"]);
+    } else if(mi===2){
+      S.push([m.lift,"Lifting (NAD+ + peptídeos)","day"]);
     }
   }
   else if(d.kind==="booster"){
-    // Booster: Anua 10+ ANTES do aparelho (já serve como barreira)
-    S.push([m.boosterSerum,"Serum — aplique antes do aparelho · Booster potencializa absorção","day"]);
+    // Anua 10+ ANTES do Booster — não repete depois
+    S.push([m.boosterSerum,"Serum — aplique antes do Booster para maximizar absorção","day"]);
     S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+d.note,"device"]);
+    // Nos dias sem retinol: Numbuzin entra no lugar do Anua (que já foi antes)
     if(isRet){
-      // Anua já entrou antes do aparelho — vai direto ao retinol
       S.push([m.retinolProduct,"RETINOL · espere 2 min após o aparelho · camada fina","retinol"]);
     } else {
-      S.push([m.lift,"Lifting final","day"]);
+      S.push([m.lift,"Lifting (NAD+ + peptídeos)","day"]);
     }
   }
   else {
-    // Air Shot: pele seca e limpa, sem produto antes
+    // Air Shot: pele seca e limpa antes, Anua entra depois
     S.push(["Medicube "+d.mode,"Nível "+d.lvl+" · "+d.note+" · pele SECA e LIMPA (sem produto antes)","device"]);
+    S.push(["Anua 10+ Niacinamide + TXA","Barreira antes do retinol — niacinamida reduz irritação","day"]);
     if(isRet){
-      S.push(["Anua 10+ Niacinamide + TXA","Barreira antes do retinol","day"]);
       S.push([m.retinolProduct,"RETINOL · espere 2 min após o aparelho · camada fina","retinol"]);
-    } else {
-      S.push([m.lift,"Lifting final","day"]);
+    } else if(mi===2){
+      S.push([m.lift,"Lifting (NAD+ + peptídeos)","day"]);
     }
   }
 
   S.push([m.eye,"Olhos","day"]);
-  // PDRN como hidratante final em todas as noites (sem Epidrat)
   S.push([m.moist,"Hidratante final — PDRN + colágeno","bar"]);
-
   return S;
 }
 
